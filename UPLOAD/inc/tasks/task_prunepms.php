@@ -25,4 +25,15 @@ function task_pmprune($task)
 SQL;
 
     $db->write_query($queryString);
-} 
+}
+
+// Optimize DB
+function task_optimizedb($task)
+{
+	global $db;
+	
+	$db->query("OPTIMIZE TABLE `".TABLE_PREFIX."_privatemessages`, `".TABLE_PREFIX."_tasklog`, `".TABLE_PREFIX."_tasks`");
+	
+	// Add a log
+	add_task_log($task, "The database optimization task after PMs cleaning successfully ran.");
+}

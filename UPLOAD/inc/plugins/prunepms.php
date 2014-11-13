@@ -6,16 +6,15 @@ if(!defined("IN_MYBB"))
     die("Direct initialization of this file is not allowed.");
 }
 
-
 function prunepms_info()
 {
     return array(
         "name"          => "Prune old PMs",
-        "description"   => "Automatically delete old PMs in Inbox&Sent&Trash folders + Optimize all tables in forum database.",
+        "description"   => "Automatically delete old PMs in Inbox&Sent&Trash folders + Optimize PM table in your database after cleaning.",
         "website"       => "http://community.mybb.com/user-84065.html",
         "author"        => "Elfew /Jakub Kořistka/",
         "authorsite"    => "http://community.mybb.com/user-84065.html",
-        "version"       => "0.4",
+        "version"       => "0.5",
         "guid"          => "",
         "compatibility" => "18*"
     );
@@ -33,7 +32,7 @@ global $plugins, $db, $cache;
 		require_once MYBB_ROOT.'/inc/functions_task.php';
     $this_task = array(
         "title" => "Prune old PMs",
-        "description" => "Checks for old PMs and deletes them. /Inbox&Sent&Trash folders/",
+        "description" => "Checks for old PMs, deletes them and optimizes PMs table in your database after cleaning.",
         "file" => "task_prunepms",
         "minute" => '1',
         "hour" => '0',
@@ -63,14 +62,14 @@ global $plugins, $db, $cache;
 		require_once MYBB_ROOT.'/inc/functions_task.php';
     $this_task2 = array(
         "title" => "Optimize Database",
-        "description" => "Optimizes all tables in forum database.",
+        "description" => "Optimizes ALL tables in your forum database (can add significant load while running).",
         "file" => "task_optimizedb",
         "minute" => '3',
         "hour" => '0',
         "day" => '*',
         "month" => '*',
         "weekday" => '*',
-        "enabled" => '1',
+        "enabled" => '0',
         "logging" => '1',
     );
 	$task_id = (int) $db->insert_query('tasks', $this_task2);
@@ -90,9 +89,9 @@ function prunepms_deactivate()
 global $db, $mybb;
     
 	// Remove task from task manager
-    $db->delete_query('tasks', 'file=\'task_prunepms\''); // Delete PrunePMs task 
+    $db->delete_query('tasks', 'file=\'task_prunepms\''); // Delete Prune PMs task
 	$db->delete_query('tasks', 'file=\'task_optimizedb\''); // Delete Optimize DB task
-
+	
 	// Rebuild settings
     rebuild_settings();
 }
