@@ -10,11 +10,11 @@ function prunepms_info()
 {
     return array(
         "name"          => "Prune old PMs",
-        "description"   => "Automatically delete old PMs in Inbox&Sent&Trash folders + Optimize PM table in your database after cleaning.",
+        "description"   => "Automatically delete old PMs in Inbox&Sent&Trash folders",
         "website"       => "http://community.mybb.com/user-84065.html",
         "author"        => "Elfew /Jakub Kořistka/",
         "authorsite"    => "http://community.mybb.com/user-84065.html",
-        "version"       => "0.5",
+        "version"       => "0.7",
         "guid"          => "",
         "compatibility" => "18*"
     );
@@ -22,65 +22,34 @@ function prunepms_info()
 
 function prunepms_activate()
 {
-global $plugins, $db, $cache;
+global $db, $cache;
 // Create task - Prune old PMs
 // Have we already added this task?
-	$query = $db->simple_select('tasks', 'tid', "file='task_prunepms'", array('limit' => '1'));
+    $query = $db->simple_select('tasks', 'tid', "file='task_prunepms'", array('limit' => '1'));
     if($db->num_rows($query) == 0)
-	{
+    {
+        // Load tasks function needed to run task and add nextrunt time
+        require_once MYBB_ROOT."/inc/functions_task.php";
         // If not then add
-		require_once MYBB_ROOT.'/inc/functions_task.php';
-    $this_task = array(
-        "title" => "Prune old PMs",
-        "description" => "Checks for old PMs, deletes them and optimizes PMs table in your database after cleaning.",
-        "file" => "task_prunepms",
-        "minute" => '1',
-        "hour" => '0',
-        "day" => '*',
-        "month" => '*',
-        "weekday" => '*',
-        "enabled" => '1',
-        "logging" => '1',
-    );
-	$task_id = (int) $db->insert_query('tasks', $this_task);
-        $theTask = $db->fetch_array($db->simple_select('tasks', '*', 'tid = '.(int) $task_id, 1));
-        $nextrun = fetch_next_run($this_task);
-        $db->update_query('tasks', "nextrun='{$nextrun}', tid='{$task_id}'");
-        $plugins->run_hooks('admin_tools_tasks_add_commit');
+        $new_task = array(
+            "title" => "Prune old PMs",
+            "description" => "Checks for old PMs, deletes them and optimizes PMs table in your database after cleaning.",
+            "file" => "task_prunepms",
+            "minute" => '1',
+            "hour" => '0',
+            "day" => '*',
+            "month" => '*',
+            "weekday" => '*',
+            "enabled" => '1',
+            "logging" => '1',
+        );
         
-		// Update the task and run it right now
-		$cache->update_tasks();
-		run_task($task_id);
-    }
-	
-// Create task - Optimize DB
-// Have we already added this task?
-	$query = $db->simple_select('tasks', 'tid', "file='task_optimizedb'", array('limit' => '1'));
-    if($db->num_rows($query) == 0)
-	{
-        // If not then add
-		require_once MYBB_ROOT.'/inc/functions_task.php';
-    $this_task2 = array(
-        "title" => "Optimize Database",
-        "description" => "Optimizes ALL tables in your forum database (can add significant load while running).",
-        "file" => "task_optimizedb",
-        "minute" => '3',
-        "hour" => '0',
-        "day" => '*',
-        "month" => '*',
-        "weekday" => '*',
-        "enabled" => '0',
-        "logging" => '1',
-    );
-	$task_id = (int) $db->insert_query('tasks', $this_task2);
-        $theTask = $db->fetch_array($db->simple_select('tasks', '*', 'tid = '.(int) $task_id, 1));
-        $nextrun = fetch_next_run($this_task2);
-        $db->update_query('tasks', "nextrun='{$nextrun}', tid='{$task_id}'");
-        $plugins->run_hooks('admin_tools_tasks_add_commit');
+        $new_task['nextrun'] = fetch_next_run($new_task);
+        $tid = $db->insert_query("tasks", $new_task);
         
-		// Update the task and run it right now
-		$cache->update_tasks();
-		run_task($task_id);
+        // Update the task and run it right now
+        $cache->update_tasks();
+        run_task($tid);
     }
 }
 
@@ -90,7 +59,6 @@ global $db, $mybb;
     
 	// Remove task from task manager
     $db->delete_query('tasks', 'file=\'task_prunepms\''); // Delete Prune PMs task
-	$db->delete_query('tasks', 'file=\'task_optimizedb\''); // Delete Optimize DB task
 	
 	// Rebuild settings
     rebuild_settings();
