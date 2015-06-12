@@ -12,10 +12,10 @@ function prunepms_info()
         "name"          => "Prune old PMs",
         "description"   => "Automatically delete old PMs in Inbox&Sent&Trash folders",
         "website"       => "http://community.mybb.com/user-84065.html",
-        "author"        => "Elfew /Jakub Kořistka/",
+        "author"        => "Elfew",
         "authorsite"    => "http://community.mybb.com/user-84065.html",
-        "version"       => "0.7",
-        "guid"          => "",
+        "version"       => "0.8",
+        "codename"      => "",
         "compatibility" => "18*"
     );
 }
