@@ -15,7 +15,7 @@ function task_pmprune($task)
     $secs = 30*24*3600; // 30 days
     $usecs = 60*24*3600; // 60 days
     // Do not delete unread PMs
-    $db->delete_query("privatemessages", "(dateline<".(TIME_NOW-$secs)." AND readtime>0) OR dateline<".(TIME_NOW-$usecs)." AND (folder='1' OR folder='2' OR folder='3' OR folder='4')");
+    $db->delete_query("mybb_privatemessages", "(dateline<".(TIME_NOW-$secs)." AND readtime>0) OR dateline<".(TIME_NOW-$usecs)." AND (folder='1' OR folder='2' OR folder='3' OR folder='4')");
 	// Recount PMs after cleaning
     $queryString  = <<<SQL
     UPDATE mybb_users u SET 
