@@ -7,7 +7,7 @@ if(!defined("IN_MYBB"))
 }
 
 // Prune old PMs
-function task_pmprune($task)
+function task_prunepms($task)
 {
     global $db;
 
