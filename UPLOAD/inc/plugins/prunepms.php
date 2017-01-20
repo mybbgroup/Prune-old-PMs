@@ -3,9 +3,9 @@
 /**
  *	Prune old PMs
  *
- *	@author Eldenroot <http://community.mybb.com/user-84065.html>
- *	@GitHub <https://github.com/Cu8eR/MyBB_Prune-old-PMs>
- */
+ *	@author Eldenroot <https://community.mybb.com/user-84065.html>
+ *	@GitHub <https://github.com/Cu8eeeR/MyBB_Prune-old-PMs>
+**/
  
 // Disallow direct access to this file for security reasons
 if(!defined("IN_MYBB"))
@@ -19,9 +19,9 @@ function prunepms_info()
     return array(
         "name"          => "Prune old PMs",
         "description"   => "Automatically delete old PMs + optimize DB tables",
-        "website"       => "http://community.mybb.com/user-84065.html",
-        "author"        => "Eldenroot",
-        "authorsite"    => "http://community.mybb.com/user-84065.html",
+        "website"       => "https://community.mybb.com/user-84065.html",
+        "author"        => "Eldenroot (@Cu8eeeR)",
+        "authorsite"    => "https://community.mybb.com/user-84065.html",
         "version"       => "1.0",
         "codename"      => "prune",
         "compatibility" => "18*"
@@ -69,7 +69,7 @@ function prunepms_deactivate()
 {
 	global $db, $mybb;
     
-		// Remove task from task manager
+		// Remove task from task manager in ACP
 			$db->delete_query('tasks', 'file=\'prunepms\''); // Delete Prune old PMs task
 	
 		// Rebuild settings
