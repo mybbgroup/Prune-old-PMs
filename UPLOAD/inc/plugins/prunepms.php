@@ -22,7 +22,7 @@ function prunepms_info()
         "website"       => "https://community.mybb.com/user-84065.html",
         "author"        => "Eldenroot (@Cu8eeeR)",
         "authorsite"    => "https://community.mybb.com/user-84065.html",
-        "version"       => "1.0",
+        "version"       => "1.0.0",
         "codename"      => "prune",
         "compatibility" => "18*"
     );
