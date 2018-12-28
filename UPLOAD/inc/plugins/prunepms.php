@@ -1,11 +1,31 @@
 <?php
 
 /**
- *	Prune old PMs
+ * MyBB Prune Old PMs - plugin for MyBB 1.8.x forum software
+ * 
+ * @package MyBB Plugin
+ * @author MyBB Group - Eldenroot - <eldenroot@gmail.com>
+ * @copyright 2018 MyBB Group <http://mybb.group>
+ * @link <https://github.com/mybbgroup/MyBB_Prune-old-PMs>
+ * @license GPL-3.0
+ * 
+ */
+  
+/**
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
  *
- *	@author Eldenroot <https://community.mybb.com/user-84065.html>
- *	@GitHub <https://github.com/Cu8eeeR/MyBB_Prune-old-PMs>
-**/
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
  
 // Disallow direct access to this file for security reasons
 if(!defined("IN_MYBB"))
@@ -19,9 +39,9 @@ function prunepms_info()
     return array(
         "name"          => "Prune old PMs",
         "description"   => "Automatically delete old PMs + optimize DB tables",
-        "website"       => "https://community.mybb.com/user-84065.html",
-        "author"        => "Eldenroot (@Cu8eeeR)",
-        "authorsite"    => "https://community.mybb.com/user-84065.html",
+        "website"       => "https://github.com/mybbgroup/MyBB_Prune-old-PMs",
+        "author"        => "MyBB Group (Eldenroot)",
+        "authorsite"    => "https://github.com/mybbgroup/MyBB_Prune-old-PMs",
         "version"       => "1.0.0",
         "codename"      => "prune",
         "compatibility" => "18*"

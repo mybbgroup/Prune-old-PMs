@@ -1,11 +1,30 @@
 <?php
 
 /**
- *	Prune old PMs
+ * MyBB Prune Old PMs - plugin for MyBB 1.8.x forum software
+ * 
+ * @package MyBB Plugin
+ * @author MyBB Group - Eldenroot - <eldenroot@gmail.com>
+ * @copyright 2018 MyBB Group <http://mybb.group>
+ * @link <https://github.com/mybbgroup/MyBB_Prune-old-PMs>
+ * @license GPL-3.0
+ * 
+ */
+  
+/**
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
  *
- *	@author Eldenroot <http://community.mybb.com/user-84065.html>
- *	@GitHub <https://github.com/Cu8eR/MyBB_Prune-old-PMs>
- *	@version 1.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
  */
 
 // Disallow direct access to this file for security reasons
@@ -19,7 +38,7 @@ function task_prunepms($task)
 {
     global $db;
 
-    // PMs older than x seconds will be deleted
+    // PMs older than X seconds will be deleted
     $secs = 30*24*3600; // 30 days for read PMs
     $usecs = 90*24*3600; // 90 days for unread PMs
 	
