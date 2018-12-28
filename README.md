@@ -1,6 +1,6 @@
 MyBB_Prune-old-PMs - v1.1
 ===============================
-*Mod for MyBB 1.8.x created by @Eldenroot /https://community.mybb.com/user-84065.html/
+*Plugin for MyBB 1.8.x created by @Eldenroot /https://community.mybb.com/user-84065.html/ maintained by MyBB Group
 
 Prune old PMs with custom settings for time period for read/unread PMs.
 
