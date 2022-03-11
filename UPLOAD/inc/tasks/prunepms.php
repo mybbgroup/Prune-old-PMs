@@ -50,12 +50,10 @@ function task_prunepms($task)
 	}
 	
 	// Recount PMs after cleaning
-    $queryString  = <<<SQL
-    UPDATE mybb_users u SET 
-        totalpms = (SELECT COUNT(pmid) FROM mybb_privatemessages pm WHERE pm.uid = u.uid),
-        unreadpms = (SELECT COUNT(pmid) FROM mybb_privatemessages pm WHERE
-            pm.uid = u.uid AND status='0' AND (folder='1' OR folder='2' OR folder='3' OR folder='4'));
-SQL;
+	$queryString  = "UPDATE ".TABLE_PREFIX."users u SET 
+		totalpms = (SELECT COUNT(pmid) FROM ".TABLE_PREFIX."privatemessages pm WHERE pm.uid = u.uid),
+		unreadpms = (SELECT COUNT(pmid) FROM ".TABLE_PREFIX."privatemessages pm WHERE
+			pm.uid = u.uid AND status='0' AND (folder='1' OR folder='2' OR folder='3' OR folder='4'));";
 
     $db->write_query($queryString);
 	
