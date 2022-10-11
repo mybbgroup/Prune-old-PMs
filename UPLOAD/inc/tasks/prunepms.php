@@ -72,4 +72,3 @@
 		} else {
 		add_task_log($task, $lang->prunepms_task_log_optimise_tables_failure);
 	}
-}
