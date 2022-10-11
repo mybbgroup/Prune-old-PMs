@@ -32,7 +32,7 @@
 	{
 		die("Direct initialization of this file is not allowed.");
 	}
-	
+
 	// Plugin info
 	function prunepms_info()
 	{
@@ -50,55 +50,54 @@
         "compatibility" => "18*"
 		);
 	}
-	
+
 	// Plugin activate
 	function prunepms_activate()
 	{
 		global $db, $cache, $lang;
-	
-    // Load lang file
-    $lang->load("config_prunepms");
-	
-	// Create task - Prune old PMs
-	// Have we already added this task?
-	$query = $db->simple_select('tasks', 'tid', "file='prunepms'", array('limit' => '1'));
-	if($db->num_rows($query) == 0)
-	{
-	// Load tasks function needed to run a task and add nextrun time
-	require_once MYBB_ROOT."/inc/functions_task.php";
-	
-	// If not then add
-	$new_task = array(
-	"title" => $db->escape_string($lang->prunepms_task_name),
-	"description" => $db->escape_string($lang->prunepms_task_desc),
-	"file" => "prunepms",
-	"minute" => '1',
-	"hour" => '0',
-	"day" => '*',
-	"month" => '*',
-	"weekday" => '*',
-	"enabled" => '1',
-	"logging" => '1',
-	);
-	
-	$new_task['nextrun'] = fetch_next_run($new_task);
-	$tid = $db->insert_query("tasks", $new_task);
-	
-	// Update the task and run it right now
-	$cache->update_tasks();
-	run_task($tid);
+		
+		// Load lang file
+		$lang->load("config_prunepms");
+		
+		// Create task - Prune old PMs
+		// Have we already added this task?
+		$query = $db->simple_select('tasks', 'tid', "file='prunepms'", array('limit' => '1'));
+		if($db->num_rows($query) == 0)
+		{
+			// Load tasks function needed to run a task and add nextrun time
+			require_once MYBB_ROOT."/inc/functions_task.php";
+			
+			// If not then add
+			$new_task = array(
+			"title" => $db->escape_string($lang->prunepms_task_name),
+			"description" => $db->escape_string($lang->prunepms_task_desc),
+			"file" => "prunepms",
+			"minute" => '1',
+			"hour" => '0',
+			"day" => '*',
+			"month" => '*',
+			"weekday" => '*',
+			"enabled" => '1',
+			"logging" => '1',
+			);
+			
+			$new_task['nextrun'] = fetch_next_run($new_task);
+			$tid = $db->insert_query("tasks", $new_task);
+			
+			// Update the task and run it right now
+			$cache->update_tasks();
+			run_task($tid);
+		}
 	}
-	}
-	
+
 	// Plugin deactivate
 	function prunepms_deactivate()
 	{
-	global $db, $cache;
-    
-	// Remove task from task manager in ACP
-	$db->delete_query('tasks', 'file=\'prunepms\''); // Delete Prune old PMs task
-	
-    // Update task cache
-    $cache->update_tasks();
-	}
+		global $db, $cache;
 		
+		// Remove task from task manager in ACP
+		$db->delete_query('tasks', 'file=\'prunepms\''); // Delete Prune old PMs task
+		
+		// Update task cache
+		$cache->update_tasks();
+	}
