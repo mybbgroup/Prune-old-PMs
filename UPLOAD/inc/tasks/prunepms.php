@@ -32,6 +32,12 @@
 	{
 		die("Direct initialization of this file is not allowed.");
 	}
+	
+	// Recount PMs after cleaning
+	$queryString  = "UPDATE ".TABLE_PREFIX."users u SET 
+		totalpms = (SELECT COUNT(pmid) FROM ".TABLE_PREFIX."privatemessages pm WHERE pm.uid = u.uid),
+		unreadpms = (SELECT COUNT(pmid) FROM ".TABLE_PREFIX."privatemessages pm WHERE
+			pm.uid = u.uid AND status='0' AND (folder='1' OR folder='2' OR folder='3' OR folder='4'));";
 
 	// Prune old PMs
 	function task_prunepms($task)
